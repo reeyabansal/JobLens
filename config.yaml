@@ -4,14 +4,12 @@
 filters:
   # ── ROLE ──────────────────────────────────────────────────────────────
   # A posting is kept only if one of these appears in the TITLE.
-  role_keywords: ["software engineer", "backend", "data engineer", "new grad", "graduate", "ai", "ml", "machine learning", "deep learning", "nlp", "natural language processing"]
+  role_keywords: ["analyst", "finance"]
   title_only: true            # match role terms in the title only (recommended)
 
   # ── LEVEL ─────────────────────────────────────────────────────────────
   # Titles containing any of these are dropped (managerial / senior).
-  exclude_title_terms:
-    ["manager", "director", "principal", "staff", "lead", "senior", "sr.",
-     "vp", "head of", "president", "architect", "ii", "iii", "iv"]
+  exclude_title_terms: ["intern", "part-time"]
   job_level:
     require_entry_level: false   # if true, title must carry an entry-level signal below
     entry_signals: ["new grad", "graduate", "junior", "entry level", "associate",
@@ -20,13 +18,12 @@ filters:
   # ── TYPE ──────────────────────────────────────────────────────────────
   # Titles containing any of these are dropped (keeps full-time roles).
   job_type:
-    blocked: ["intern", "internship", "co-op", "contract", "part-time",
-              "temporary", "seasonal", "apprentice"]
+    blocked: []
 
   # ── LOCATION ──────────────────────────────────────────────────────────
   location:
     remote_ok: true                    # keep remote roles regardless of country
-    allowed_countries: ["Canada", "India"]  # keep only these; [] = anywhere
+    allowed_countries: ["Canada", "India", "United Kingdom", "United States"]  # keep only these; [] = anywhere
     blocked_countries: ["Poland", "Vietnam", "Pakistan", "Philippines",
                         "China", "Singapore", "United Kingdom", "Germany"]
     allowed_locations: []              # extra city/substring allowances, e.g. ["Toronto"]
@@ -35,7 +32,7 @@ filters:
   # ── START DATE ────────────────────────────────────────────────────────
   earliest_start: "2027-05-01"         # drop roles that PROVABLY start earlier
 
-resume_path: "sample/Reeya Bansal Base Resume.pdf"    # .txt / .md / .pdf / .docx
+resume_path: "sample/resume.txt"    # .txt / .md / .pdf / .docx
 
 sources:
   # Per-company ATS boards — free, stable JSON. Add the company's board slug.
@@ -64,8 +61,8 @@ sources:
 
   # Aggregator — free tier (1,000 calls/mo). Needs ADZUNA_APP_ID/KEY in .env.
   adzuna:
-    enabled: false
-    country: "us"
+    enabled: true
+    country: "can"
     results: 50
 
 notify:

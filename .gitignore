@@ -6,3 +6,4 @@ jobhunt.db
 jobhunt.db-*
 venv/
 .env.example
+config copy.yaml

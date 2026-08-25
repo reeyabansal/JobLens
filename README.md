@@ -55,7 +55,7 @@ Update `resume_path` in `config.yaml` to your resume.
 
 ```yaml
 filters:
-  keywords: ["software engineer", "backend", "data engineer", "new grad"]
+  keywords: ["analyst", "finance"]
   title_only: true                # match role keywords in the TITLE 
   exclude_titles: ["manager", "director", "principal", "staff", "lead",
                    "senior", "vp", "head of", "architect", "ii", "iii"] # configured for new grad roles
