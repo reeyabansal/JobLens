@@ -1,0 +1,32 @@
+JORDAN RIVERA
+Software Engineer  ·  jordan.rivera@email.com  ·  github.com/jrivera
+
+SUMMARY
+Backend-leaning software engineer graduating May 2027, focused on distributed
+systems, APIs, and data pipelines. Comfortable shipping production services and
+owning features end to end.
+
+EXPERIENCE
+
+Software Engineering Intern — Northwind Labs (Summer 2026)
+- Built a Python FastAPI service handling 2M+ daily requests, cutting p95 latency by 38%.
+- Designed a PostgreSQL schema and wrote optimized SQL queries for a reporting module.
+- Containerized the service with Docker and set up a CI pipeline with GitHub Actions.
+- Wrote unit and integration tests, raising coverage from 54% to 89%.
+
+Undergraduate Research Assistant — State University (2025–2026)
+- Implemented data-processing pipelines in Python and pandas over 400GB of logs.
+- Built a REST API to expose model results to a React front end used by 5 research teams.
+- Collaborated in an Agile team using Git and Jira across two-week sprints.
+
+PROJECTS
+- Ledgerly: a double-entry accounting API in Python/Flask with a Postgres backend.
+- Deployed a personal project to AWS EC2 behind Nginx.
+
+SKILLS
+Python, Java, SQL, FastAPI, Flask, React, PostgreSQL, Docker, Git, REST APIs,
+pandas, unit testing, Agile.
+
+EDUCATION
+B.S. Computer Science — State University, expected May 2027. GPA 3.8.
+Relevant coursework: data structures, algorithms, operating systems, databases.

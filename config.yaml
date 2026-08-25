@@ -1,0 +1,73 @@
+# ── Your job search config ───────────────────────────────────────────────
+# Secrets (API keys, tokens) go in .env, NOT here.
+
+filters:
+  # ── ROLE ──────────────────────────────────────────────────────────────
+  # A posting is kept only if one of these appears in the TITLE.
+  role_keywords: ["software engineer", "backend", "data engineer", "new grad", "graduate", "ai", "ml", "machine learning", "deep learning", "nlp", "natural language processing"]
+  title_only: true            # match role terms in the title only (recommended)
+
+  # ── LEVEL ─────────────────────────────────────────────────────────────
+  # Titles containing any of these are dropped (managerial / senior).
+  exclude_title_terms:
+    ["manager", "director", "principal", "staff", "lead", "senior", "sr.",
+     "vp", "head of", "president", "architect", "ii", "iii", "iv"]
+  job_level:
+    require_entry_level: false   # if true, title must carry an entry-level signal below
+    entry_signals: ["new grad", "graduate", "junior", "entry level", "associate",
+                    "university grad", "early career", "campus"]
+
+  # ── TYPE ──────────────────────────────────────────────────────────────
+  # Titles containing any of these are dropped (keeps full-time roles).
+  job_type:
+    blocked: ["intern", "internship", "co-op", "contract", "part-time",
+              "temporary", "seasonal", "apprentice"]
+
+  # ── LOCATION ──────────────────────────────────────────────────────────
+  location:
+    remote_ok: true                    # keep remote roles regardless of country
+    allowed_countries: ["Canada", "India"]  # keep only these; [] = anywhere
+    blocked_countries: ["Poland", "Vietnam", "Pakistan", "Philippines",
+                        "China", "Singapore", "United Kingdom", "Germany"]
+    allowed_locations: []              # extra city/substring allowances, e.g. ["Toronto"]
+    allow_unknown_locations: true      # keep postings whose country can't be inferred
+
+  # ── START DATE ────────────────────────────────────────────────────────
+  earliest_start: "2027-05-01"         # drop roles that PROVABLY start earlier
+
+resume_path: "sample/Reeya Bansal Base Resume.pdf"    # .txt / .md / .pdf / .docx
+
+sources:
+  # Per-company ATS boards — free, stable JSON. Add the company's board slug.
+  greenhouse:
+    enabled: true
+    companies: ["stripe", "airbnb", "databricks"]
+  lever:
+    enabled: true
+    companies: ["netflix"]
+  ashby:
+    enabled: false
+    companies: []          # e.g. ["ramp", "linear"]
+
+  # Community trackers — great for new-grad / internship roles by year.
+  # Two entry forms are accepted:
+  #   • "owner/repo"                     → whole repo (JSON feed, else README table)
+  #   • "owner/repo/blob/<branch>/<file.md>" → one exact markdown list on a branch
+  #     (handy for region-specific lists). A github.com URL prefix is fine too.
+  github_repo:
+    enabled: true
+    repos:
+      - "SimplifyJobs/New-Grad-Positions"
+      - "speedyapply/2027-SWE-College-Jobs/blob/main/NEW_GRAD_INTL.md"
+      - "vanshb03/New-Grad-2027/blob/dev/Canada.md"
+    # max_per_repo: 300     # cap rows pulled per entry before filtering
+
+  # Aggregator — free tier (1,000 calls/mo). Needs ADZUNA_APP_ID/KEY in .env.
+  adzuna:
+    enabled: false
+    country: "us"
+    results: 50
+
+notify:
+  channel: "none"          # none | telegram | slack
+  dashboard_url: "http://localhost:8000"

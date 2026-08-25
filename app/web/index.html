@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobHunt</title>
+  <link rel="stylesheet" href="/static/styles.css?v=3" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◆</span>
+      <span class="brand-name">JobHunt</span>
+      <span class="brand-sub" id="filterSummary">loading…</span>
+    </div>
+    <div class="topbar-actions">
+      <span class="resume-flag" id="resumeFlag" title="resume status"></span>
+      <button class="btn btn-primary" id="addJobBtn">+ Add job</button>
+      <button class="btn btn-ghost" id="pruneBtn" title="Remove stored jobs that no longer match your filters">Prune stale</button>
+      <button class="btn btn-ghost" id="ingestBtn">Run ingestion</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT: job list -->
+    <section class="list-pane">
+      <div class="list-controls">
+        <div class="segmented" id="statusFilter"></div>
+        <select class="order-select" id="orderSelect">
+          <option value="score">Sort: match score</option>
+          <option value="date">Sort: newest</option>
+        </select>
+      </div>
+      <div class="job-list" id="jobList"></div>
+    </section>
+
+    <!-- RIGHT: detail -->
+    <section class="detail-pane" id="detailPane">
+      <div class="empty-state" id="emptyState">
+        <p class="empty-title">Pick a job to analyze</p>
+        <p class="empty-hint">Run ingestion to pull new postings, then open one to
+          see where your resume matches and where the keyword gaps are.</p>
+      </div>
+      <div class="detail" id="detail" hidden></div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="addModal" hidden>
+    <div class="modal">
+      <div class="modal-title">Add a job manually</div>
+      <p class="modal-hint">For roles you found elsewhere and want to track. Paste the full description so the ATS analysis is meaningful.</p>
+      <label>Title *<input id="mTitle" placeholder="Backend Software Engineer"></label>
+      <label>Company *<input id="mCompany" placeholder="Acme Corp"></label>
+      <div class="modal-row">
+        <label>Location<input id="mLocation" placeholder="Remote · San Francisco, CA"></label>
+        <label class="modal-check"><input type="checkbox" id="mRemote"> Remote</label>
+      </div>
+      <label>Posting URL<input id="mUrl" placeholder="https://…"></label>
+      <label>Job description<textarea id="mDesc" placeholder="Paste the full JD here…"></textarea></label>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="mCancel">Cancel</button>
+        <button class="btn btn-primary" id="mSave">Add job</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="/static/app.js?v=3"></script>
+</body>
+</html>

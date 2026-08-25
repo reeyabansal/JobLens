@@ -1,0 +1,31 @@
+# core (required)
+fastapi>=0.110
+uvicorn[standard]>=0.27
+requests>=2.31
+pyyaml>=6.0
+rapidfuzz>=3.6
+scikit-learn>=1.4
+python-dateutil>=2.9
+pydantic>=2.6
+
+# resume readers (optional but recommended)
+pypdf>=4.0
+python-docx>=1.1
+
+# scheduler (optional — for automatic recurring ingestion)
+apscheduler>=3.10
+
+# ── OPTIONAL: richer "Analyze score" (multi-factor ATS audit) ──────────────
+# Adds keyword/title/education/experience/format/readability sub-scores.
+# After installing, download the spaCy model it needs:
+#   python -m spacy download en_core_web_sm
+# ats-resume-scorer>=2.0
+
+# ── OPTIONAL: "Deep dive" button (Gemini via LangChain) ────────────────────
+# Set GEMINI_API_KEY in .env, then optionally GEMINI_MODEL.
+# langchain-google-genai>=2.0
+# langchain-core>=0.3
+
+# optional quality boost for the built-in scorer (semantic embeddings).
+# The app runs fully without these using TF-IDF + a curated skills list.
+# sentence-transformers>=2.6
