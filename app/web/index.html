@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JobHunt</title>
-  <link rel="stylesheet" href="/static/styles.css?v=3" />
+  <link rel="stylesheet" href="/static/styles.css?v=2" />
 </head>
 <body>
   <header class="topbar">
@@ -27,7 +27,7 @@
       <div class="list-controls">
         <div class="segmented" id="statusFilter"></div>
         <select class="order-select" id="orderSelect">
-          <option value="score">Sort: match score</option>
+          <option value="score">Sort: best match ↓</option>
           <option value="date">Sort: newest</option>
         </select>
       </div>
@@ -45,7 +45,7 @@
     </section>
   </main>
 
-  <div class="modal-backdrop" id="addModal" hidden>
+  <div class="modal-backdrop" id="addModal" hidden style="display:none">
     <div class="modal">
       <div class="modal-title">Add a job manually</div>
       <p class="modal-hint">For roles you found elsewhere and want to track. Paste the full description so the ATS analysis is meaningful.</p>
@@ -66,6 +66,6 @@
 
   <div class="toast" id="toast" hidden></div>
 
-  <script src="/static/app.js?v=3"></script>
+  <script src="/static/app.js?v=2"></script>
 </body>
 </html>
