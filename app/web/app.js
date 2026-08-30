@@ -89,8 +89,25 @@ async function selectJob(id) {
   location.hash = `#/job/${id}`;
   document.querySelectorAll(".job-row").forEach(r =>
     r.classList.toggle("selected", r.dataset.id === id));
-  const job = await api(`/api/job/${id}`);
+  let job = await api(`/api/job/${id}`);
   renderDetail(job);
+
+  // Jobs are scored automatically at ingest. If this one has no analysis yet
+  // (e.g. added manually or ingested before this feature), score it now. If the
+  // optional ATS-audit engine is available, enrich a keyword-only analysis too.
+  const caps = window.CAPS || {};
+  const needs = !job.analysis || (!job.analysis.ats && caps.ats_scorer);
+  if (needs) {
+    const area = $("#analysisArea");
+    if (area && !job.analysis) area.innerHTML =
+      `<div class="deepdive loading">Scoring against your resume…</div>`;
+    try {
+      await api(`/api/job/${id}/analyze`, { method: "POST" });
+      job = await api(`/api/job/${id}`);
+      if (state.selected === id) renderDetail(job);   // guard against fast switching
+      loadJobs();                                      // reflect the new score in the list order
+    } catch (e) { /* no resume configured, etc. — leave detail as-is */ }
+  }
 }
 
 function renderDetail(job) {
@@ -112,8 +129,6 @@ function renderDetail(job) {
     <div class="detail-controls">
       <label style="color:var(--muted);font-size:12.5px">Status</label>
       <select id="statusSelect">${statusOpts}</select>
-      <button class="btn btn-primary" id="analyzeBtn">
-        ${job.analysis ? "Re-analyze score" : "Analyze score"}</button>
       <button class="btn btn-ghost" id="deepDiveBtn" title="Ask Gemini for concrete resume edits (requires GEMINI_API_KEY)">Deep dive ✨</button>
       <button class="btn btn-danger" id="deleteBtn">Delete</button>
       <a class="ext-link" href="${job.url}" target="_blank" rel="noopener">Open posting ↗</a>
@@ -136,7 +151,6 @@ function renderDetail(job) {
     toast(`Status → ${e.target.value.replace("_", " ")}`);
     loadJobs();
   };
-  $("#analyzeBtn").onclick = () => runAnalyze(job.id, $("#analyzeBtn"));
   $("#deleteBtn").onclick = () => deleteJob(job);
   $("#deepDiveBtn").onclick = () => runDeepDive(job.id, $("#deepDiveBtn"));
   $("#jdText").oninput = (e) => { $("#jdCount").textContent = `${e.target.value.length} chars`; };
@@ -170,21 +184,6 @@ async function deleteJob(job) {
   $("#emptyState").hidden = false;
   loadJobs();
   toast("Job deleted");
-}
-
-async function runAnalyze(id, btn) {
-  btn.disabled = true;
-  btn.innerHTML = `<span class="spin"></span> analyzing…`;
-  try {
-    const a = await api(`/api/job/${id}/analyze`, { method: "POST" });
-    const job = await api(`/api/job/${id}`);
-    renderAnalysis(job, a);
-    loadJobs();
-    toast(`Match score ${Math.round(a.score)}%`);
-  } catch (e) {
-    toast(e.detail || "Analysis failed");
-    btn.disabled = false; btn.textContent = "Analyze against my resume";
-  }
 }
 
 function renderAtsAudit(ats) {
